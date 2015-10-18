@@ -83,28 +83,29 @@ public class IndeterminateCheckBox extends AppCompatCheckBox
     }
 
     public void setChecked(boolean checked) {
+        final boolean checkedChanged = isChecked() != checked;
         super.setChecked(checked);
-        setIndeterminate(false);
+        final boolean wasIndeterminate = isIndeterminate();
+        setIndeterminateImpl(false);
+        if (wasIndeterminate || checkedChanged) {
+            notifyStateListener();
+        }
     }
 
     public void setIndeterminate(boolean indeterminate) {
+        final boolean indeterminateChanged = isIndeterminate() != indeterminate;
+        setIndeterminateImpl(indeterminate);
+        if (indeterminateChanged) {
+            notifyStateListener();
+        }
+    }
+
+    private void setIndeterminateImpl(boolean indeterminate) {
         if (mIndeterminate != indeterminate) {
             mIndeterminate = indeterminate;
             refreshDrawableState();
             /*notifyViewAccessibilityStateChangedIfNeeded(
                     AccessibilityEvent.CONTENT_CHANGE_TYPE_UNDEFINED); */
-
-            // Avoid infinite recursions if setState() is called from a listener
-            if (mBroadcasting) {
-                return;
-            }
-
-            mBroadcasting = true;
-            if (mOnStateChangedListener != null) {
-                mOnStateChangedListener.onStateChanged(this, getState());
-            }
-
-            mBroadcasting = false;
         }
     }
 
@@ -127,19 +128,12 @@ public class IndeterminateCheckBox extends AppCompatCheckBox
         }
     }
 
-    @Override
-    protected int[] onCreateDrawableState(int extraSpace) {
-        final int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
-        if (getState() == null) {
-            mergeDrawableStates(drawableState, INDETERMINATE_STATE_SET);
-        }
-        return drawableState;
-    }
-
     /**
-     * Register a callback to be invoked when the indeterminate state changes.
+     * Register a callback to be invoked when the indeterminate or checked state changes.
+     * The standard <code>OnCheckedChangedListener</code> will still be called prior to
+     * OnStateChangedListener.
      *
-     * @param listener the callback to call on indeterminate state change
+     * @param listener the callback to call on indeterminate or checked state change
      */
     public void setOnStateChangedListener(OnStateChangedListener listener) {
         mOnStateChangedListener = listener;
@@ -148,6 +142,28 @@ public class IndeterminateCheckBox extends AppCompatCheckBox
     @Override
     public CharSequence getAccessibilityClassName() {
         return IndeterminateCheckBox.class.getName();
+    }
+
+    private void notifyStateListener() {
+        // Avoid infinite recursions if state is changed from a listener
+        if (mBroadcasting) {
+            return;
+        }
+
+        mBroadcasting = true;
+        if (mOnStateChangedListener != null) {
+            mOnStateChangedListener.onStateChanged(this, getState());
+        }
+        mBroadcasting = false;
+    }
+
+    @Override
+    protected int[] onCreateDrawableState(int extraSpace) {
+        final int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
+        if (getState() == null) {
+            mergeDrawableStates(drawableState, INDETERMINATE_STATE_SET);
+        }
+        return drawableState;
     }
 
     static class SavedState extends BaseSavedState {
