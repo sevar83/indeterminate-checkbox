@@ -1,153 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/activity_horizontal_margin"
-    android:orientation="vertical"
     tools:showIn="@layout/activity_main"
     tools:context=".MainActivity">
-
-    <TextView
-        android:text="IndeterminateCheckBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/activity_horizontal_margin"
         android:orientation="vertical">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btn_indeterminate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Indeterminate"
+                android:textSize="12sp"/>
+
+            <Button
+                android:id="@+id/btn_checked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Check"
+                android:textSize="12sp"/>
+
+            <Button
+                android:id="@+id/btn_unchecked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Uncheck"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btn_enable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enable"
+                android:textSize="12sp"/>
+
+            <Button
+                android:id="@+id/btn_disable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Disable"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
+
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Standard CheckBox"
+            android:id="@+id/checkBox"/>
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="AppCompatCheckBox"
+            android:id="@+id/app_compat_checkbox"/>
 
         <com.buildware.widget.indeterm.IndeterminateCheckBox
             android:id="@+id/indeterm_checkbox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Indeterminate state"
-            app:indeterminate="true"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"/>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/btn_indeterminate1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Indeterminate"/>
-
-            <Button
-                android:id="@+id/btn_checked1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Checked"/>
-
-            <Button
-                android:id="@+id/btn_unchecked1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Unchecked"/>
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <TextView
-        android:text="IndeterminateCheckedTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <com.buildware.widget.indeterm.IndeterminateCheckedTextView
-            android:id="@+id/indeterm_checkedtextview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Indeterminate state"
-            app:indeterminate="true"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
-            android:gravity="center_vertical"
-            android:clickable="true"
-            android:focusable="true"/>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/btn_indeterminate2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Indeterminate"/>
-
-            <Button
-                android:id="@+id/btn_checked2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Checked"/>
-
-            <Button
-                android:id="@+id/btn_unchecked2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Unchecked"/>
-        </LinearLayout>
-    </LinearLayout>
-
-    <TextView
-        android:text="IndeterminateRadioButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+            android:text="IndeterminateCheckBox"
+            app:indeterminate="true"/>
 
         <com.buildware.widget.indeterm.IndeterminateRadioButton
             android:id="@+id/indeterm_radio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Indeterminate state"
-            app:indeterminate="true"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
-            android:gravity="center_vertical"
-            android:clickable="true"
-            android:focusable="true"/>
-
-        <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:text="IndeterminateRadioButton"
+            app:indeterminate="true"
+            android:gravity="center_vertical"/>
 
-            <Button
-                android:id="@+id/btn_indeterminate3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Indeterminate"/>
-
-            <Button
-                android:id="@+id/btn_checked3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Checked"/>
-
-            <Button
-                android:id="@+id/btn_unchecked3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Unchecked"/>
-        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</ScrollView>

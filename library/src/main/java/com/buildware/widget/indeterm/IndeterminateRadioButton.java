@@ -2,20 +2,17 @@ package com.buildware.widget.indeterm;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.util.AttributeSet;
 import android.view.ViewDebug;
 
 /**
- * Created by Svetlozar Kostadinov on 15-10-6.
+ * A RadioButton with additional 3rd "indeterminate" state.
+ * By default it is in "determinate" (checked or unchecked) state.
+ * @author Svetlozar Kostadinov (sevarbg@gmail.com)
  */
 public class IndeterminateRadioButton extends AppCompatRadioButton
         implements IndeterminateCheckable {
@@ -24,7 +21,7 @@ public class IndeterminateRadioButton extends AppCompatRadioButton
             R.attr.state_indeterminate
     };
 
-    private Boolean mState;
+    private boolean mIndeterminate;
     private boolean mBroadcasting;
     private OnStateChangedListener mOnStateChangedListener;
 
@@ -35,13 +32,13 @@ public class IndeterminateRadioButton extends AppCompatRadioButton
         /**
          * Called when the indeterminate state has changed.
          *
-         * @param buttonView The checkbox view whose state has changed.
+         * @param radioButton The RadioButton whose state has changed.
          * @param state The state of buttonView. Value meanings:
          *              null = indeterminate state
          *              true = checked state
          *              false = unchecked state
          */
-        void onStateChanged(IndeterminateRadioButton buttonView, @Nullable Boolean state);
+        void onStateChanged(IndeterminateRadioButton radioButton, @Nullable Boolean state);
     }
 
     public IndeterminateRadioButton(Context context) {
@@ -55,9 +52,8 @@ public class IndeterminateRadioButton extends AppCompatRadioButton
     public IndeterminateRadioButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        setButtonDrawable(R.drawable.btn_radio);
-        setSupportButtonTintList(ContextCompat.getColorStateList(context,
-                R.color.control_checkable_material));
+        //setSupportButtonTintList(ContextCompat.getColorStateList(context, R.color.control_checkable_material));
+        setButtonDrawable(Utils.tintDrawable(this, R.drawable.btn_radio));
 
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.IndeterminateCheckable);
         try {
@@ -74,22 +70,21 @@ public class IndeterminateRadioButton extends AppCompatRadioButton
 
     @Override
     public void toggle() {
-        if (mState == null) {
+        if (mIndeterminate) {
             setChecked(true);
         } else {
             super.toggle();
         }
     }
 
-    @Override
     public void setChecked(boolean checked) {
         super.setChecked(checked);
-        setState(checked);
+        setIndeterminate(false);
     }
 
-    public void setState(Boolean state) {
-        if (mState != state) {
-            mState = state;
+    public void setIndeterminate(boolean indeterminate) {
+        if (mIndeterminate != indeterminate) {
+            mIndeterminate = indeterminate;
             refreshDrawableState();
             /*notifyViewAccessibilityStateChangedIfNeeded(
                     AccessibilityEvent.CONTENT_CHANGE_TYPE_UNDEFINED); */
@@ -101,7 +96,7 @@ public class IndeterminateRadioButton extends AppCompatRadioButton
 
             mBroadcasting = true;
             if (mOnStateChangedListener != null) {
-                mOnStateChangedListener.onStateChanged(this, mState);
+                mOnStateChangedListener.onStateChanged(this, getState());
             }
 
             mBroadcasting = false;
@@ -109,8 +104,22 @@ public class IndeterminateRadioButton extends AppCompatRadioButton
     }
 
     @ViewDebug.ExportedProperty
+    public boolean isIndeterminate() {
+        return mIndeterminate;
+    }
+
+    @ViewDebug.ExportedProperty
     public Boolean getState() {
-        return mState;
+        return mIndeterminate ? null : isChecked();
+    }
+
+    @Override
+    public void setState(Boolean state) {
+        if (state != null) {
+            setChecked(state);
+        } else {
+            setIndeterminate(true);
+        }
     }
 
     @Override

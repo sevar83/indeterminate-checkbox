@@ -5,5 +5,7 @@
         <attr name="state_indeterminate" format="boolean" />
         <!-- Indeterminate state attribute for the view -->
         <attr name="indeterminate" format="boolean" />
+        <attr name="normalColor" format="color" />
+        <attr name="checkedColor" format="color" />
     </declare-styleable>
 </resources>

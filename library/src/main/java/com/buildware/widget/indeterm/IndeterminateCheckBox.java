@@ -6,14 +6,14 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.util.AttributeSet;
 import android.view.ViewDebug;
 
 /**
- * Created by Svetlozar Kostadinov on 15-10-6.
+ * A CheckBox with additional 3rd "indeterminate" state.
+ * By default it is in "determinate" (checked or unchecked) state.
+ * @author Svetlozar Kostadinov (sevarbg@gmail.com)
  */
 public class IndeterminateCheckBox extends AppCompatCheckBox
         implements IndeterminateCheckable {
@@ -22,7 +22,7 @@ public class IndeterminateCheckBox extends AppCompatCheckBox
             R.attr.state_indeterminate
     };
 
-    private Boolean mState;
+    private boolean mIndeterminate;
     private boolean mBroadcasting;
     private OnStateChangedListener mOnStateChangedListener;
 
@@ -33,13 +33,13 @@ public class IndeterminateCheckBox extends AppCompatCheckBox
         /**
          * Called when the indeterminate state has changed.
          *
-         * @param buttonView The checkbox view whose state has changed.
-         * @param state The state of buttonView. Value meanings:
+         * @param checkBox The checkbox view whose state has changed.
+         * @param newState The new state of checkBox. Value meanings:
          *              null = indeterminate state
          *              true = checked state
          *              false = unchecked state
          */
-        void onStateChanged(IndeterminateCheckBox buttonView, @Nullable Boolean state);
+        void onStateChanged(IndeterminateCheckBox checkBox, @Nullable Boolean newState);
     }
 
     public IndeterminateCheckBox(Context context) {
@@ -53,7 +53,12 @@ public class IndeterminateCheckBox extends AppCompatCheckBox
     public IndeterminateCheckBox(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        setButtonDrawable(R.drawable.btn_checkmark);
+        if (Build.VERSION.SDK_INT >= 23) {
+            setButtonDrawable(R.drawable.btn_checkmark);
+        } else {
+            //setSupportButtonTintList(ContextCompat.getColorStateList(context, R.color.control_checkable_material));
+            setButtonDrawable(Utils.tintDrawable(this, R.drawable.btn_checkmark));
+        }
 
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.IndeterminateCheckable);
         try {
@@ -61,7 +66,7 @@ public class IndeterminateCheckBox extends AppCompatCheckBox
             final boolean indeterminate = a.getBoolean(
                     R.styleable.IndeterminateCheckable_indeterminate, false);
             if (indeterminate) {
-                setState(null);
+                setIndeterminate(true);
             }
         } finally {
             a.recycle();
@@ -70,22 +75,21 @@ public class IndeterminateCheckBox extends AppCompatCheckBox
 
     @Override
     public void toggle() {
-        if (mState == null) {
+        if (mIndeterminate) {
             setChecked(true);
         } else {
             super.toggle();
         }
     }
 
-    @Override
     public void setChecked(boolean checked) {
         super.setChecked(checked);
-        setState(checked);
+        setIndeterminate(false);
     }
 
-    public void setState(Boolean state) {
-        if (mState != state) {
-            mState = state;
+    public void setIndeterminate(boolean indeterminate) {
+        if (mIndeterminate != indeterminate) {
+            mIndeterminate = indeterminate;
             refreshDrawableState();
             /*notifyViewAccessibilityStateChangedIfNeeded(
                     AccessibilityEvent.CONTENT_CHANGE_TYPE_UNDEFINED); */
@@ -97,7 +101,7 @@ public class IndeterminateCheckBox extends AppCompatCheckBox
 
             mBroadcasting = true;
             if (mOnStateChangedListener != null) {
-                mOnStateChangedListener.onStateChanged(this, mState);
+                mOnStateChangedListener.onStateChanged(this, getState());
             }
 
             mBroadcasting = false;
@@ -105,8 +109,22 @@ public class IndeterminateCheckBox extends AppCompatCheckBox
     }
 
     @ViewDebug.ExportedProperty
+    public boolean isIndeterminate() {
+        return mIndeterminate;
+    }
+
+    @ViewDebug.ExportedProperty
     public Boolean getState() {
-        return mState;
+        return mIndeterminate ? null : isChecked();
+    }
+
+    @Override
+    public void setState(Boolean state) {
+        if (state != null) {
+            setChecked(state);
+        } else {
+            setIndeterminate(true);
+        }
     }
 
     @Override
@@ -133,7 +151,7 @@ public class IndeterminateCheckBox extends AppCompatCheckBox
     }
 
     static class SavedState extends BaseSavedState {
-        Boolean indeterminate;
+        boolean indeterminate;
 
         /**
          * Constructor called from {@link IndeterminateCheckBox#onSaveInstanceState()}
@@ -147,7 +165,7 @@ public class IndeterminateCheckBox extends AppCompatCheckBox
          */
         private SavedState(Parcel in) {
             super(in);
-            indeterminate = (Boolean)in.readValue(null);
+            indeterminate = (boolean)in.readValue(null);
         }
 
         @Override
