@@ -1,4 +1,5 @@
 # indeterminate-checkbox
+[![Tag](https://img.shields.io/github/tag/sevar83/indeterminate-checkbox.svg?label=JitPack)](https://jitpack.io/#sevar83/indeterminate-checkbox) [![License](https://img.shields.io/:license-apache_2.0-green.svg)](https://raw.githubusercontent.com/sevar83/indeterminate-checkbox/master/LICENSE)
 
 ![How they look like](https://raw.githubusercontent.com/sevar83/indeterminate-checkbox/master/art/screenshot1.png)
 
@@ -9,11 +10,7 @@ Android CheckBox and RadioButton with additional 3rd 'indeterminate' state.
   - Requires `AppCompat` theme
   - API 7+ (but tested only on API 10+)
 
-## Gradle Dependency
-
-[![Tag](https://img.shields.io/github/tag/sevar83/indeterminate-checkbox.svg?label=JitPack)](https://jitpack.io/#sevar83/indeterminate-checkbox) [![License](https://img.shields.io/:license-apache_2.0-green.svg)](https://raw.githubusercontent.com/sevar83/indeterminate-checkbox/master/LICENSE)
-
-## Repository
+## Getting Started
 
 1. You need to have this in your project's `build.gradle` file:
 
