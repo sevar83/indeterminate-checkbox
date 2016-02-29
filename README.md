@@ -1,5 +1,6 @@
 # indeterminate-checkbox
-[![Tag](https://img.shields.io/github/tag/sevar83/indeterminate-checkbox.svg?label=JitPack)](https://jitpack.io/#sevar83/indeterminate-checkbox) [![License](https://img.shields.io/:license-apache_2.0-green.svg)](https://raw.githubusercontent.com/sevar83/indeterminate-checkbox/master/LICENSE)
+[![Tag](https://img.shields.io/github/tag/sevar83/indeterminate-checkbox.svg?label=JitPack)](https://jitpack.io/#sevar83/indeterminate-checkbox) [![License](https://img.shields.io/:license-apache_2.0-green.svg)](https://raw.githubusercontent.com/sevar83/indeterminate-checkbox/master/LICENSE) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-indeterminate--checkbox-green.svg?style=true)](https://android-arsenal.com/details/1/3224)
+
 
 ![How they look like](https://raw.githubusercontent.com/sevar83/indeterminate-checkbox/master/art/screenshot1.png)
 
