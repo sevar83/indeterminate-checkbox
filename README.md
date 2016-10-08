@@ -1,4 +1,6 @@
 # indeterminate-checkbox
+[![Tag](https://img.shields.io/github/tag/sevar83/indeterminate-checkbox.svg?label=JitPack)](https://jitpack.io/#sevar83/indeterminate-checkbox) [![License](https://img.shields.io/:license-apache_2.0-green.svg)](https://raw.githubusercontent.com/sevar83/indeterminate-checkbox/master/LICENSE) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-indeterminate--checkbox-green.svg?style=true)](https://android-arsenal.com/details/1/3224)
+
 
 ![How they look like](https://raw.githubusercontent.com/sevar83/indeterminate-checkbox/master/art/screenshot1.png)
 
@@ -9,11 +11,7 @@ Android CheckBox and RadioButton with additional 3rd 'indeterminate' state.
   - Requires `AppCompat` theme
   - API 7+ (but tested only on API 10+)
 
-## Gradle Dependency
-
-[![Tag](https://img.shields.io/github/tag/sevar83/indeterminate-checkbox.svg?label=JitPack)](https://jitpack.io/#sevar83/indeterminate-checkbox) [![License](https://img.shields.io/:license-apache_2.0-green.svg)](https://raw.githubusercontent.com/sevar83/indeterminate-checkbox/master/LICENSE)
-
-## Repository
+## Getting Started
 
 1. You need to have this in your project's `build.gradle` file:
 
@@ -28,7 +26,7 @@ Android CheckBox and RadioButton with additional 3rd 'indeterminate' state.
 2. You need this in your app's module `build.gradle` file:
     ```Gradle
     dependencies {
-        compile 'com.github.sevar83:indeterminate-checkbox:1.0.4@aar'
+        compile 'com.github.sevar83:indeterminate-checkbox:1.0.5@aar'
     }
     ```
 
@@ -79,7 +77,7 @@ indetermCheck.setOnStateChangedListener(new OnStateChangedListener() {
 #### State
 Note that when user clicks an checkbox in 'indeterminate' state it always becomes 'checked' no matter of its current 'checked' state. Its 'checked' state is not getting toggled, it becomes 'checked'. Clicking it again and it's becomes 'unchecked'. Then another click toggles it back to 'checked' state and so on. In other words user does not toggle all three states one after another. With normal operations (clicks, keypresses) it's not possible. This behaviour is normal and follows various UX guidelines. However switching back to 'indeterminate' state is possible programatically if you decide it is appropriate (see next).
 
-#### Controlling the state programatically
+#### Controlling the state programmatically
 
 Switching to 'indeterminate' state at any time is possible with:
 ```Java
@@ -112,7 +110,7 @@ Android Lollipop framework. Unlike the `CheckBox` widget the `RadioButton` has n
 
 ## Todo
 
- - `IndeterminateCheckedTextView` - would be valueable for using in dialogs
+ - `IndeterminateCheckedTextView` - would be valuable for using in dialogs
  - Write some tests
 
 ## License
