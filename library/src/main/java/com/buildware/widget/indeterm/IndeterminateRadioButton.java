@@ -2,7 +2,6 @@ package com.buildware.widget.indeterm;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatRadioButton;
@@ -81,26 +80,9 @@ public class IndeterminateRadioButton extends AppCompatRadioButton
         final boolean checkedChanged = isChecked() != checked;
         super.setChecked(checked);
         final boolean wasIndeterminate = isIndeterminate();
-        setIndeterminateImpl(false);
+        setIndeterminateImpl(false, false);
         if (wasIndeterminate || checkedChanged) {
             notifyStateListener();
-        }
-    }
-
-    public void setIndeterminate(boolean indeterminate) {
-        final boolean indeterminateChanged = isIndeterminate() != indeterminate;
-        setIndeterminateImpl(indeterminate);
-        if (indeterminateChanged) {
-            notifyStateListener();
-        }
-    }
-
-    private void setIndeterminateImpl(boolean indeterminate) {
-        if (mIndeterminate != indeterminate) {
-            mIndeterminate = indeterminate;
-            refreshDrawableState();
-            /*notifyViewAccessibilityStateChangedIfNeeded(
-                    AccessibilityEvent.CONTENT_CHANGE_TYPE_UNDEFINED); */
         }
     }
 
@@ -108,6 +90,23 @@ public class IndeterminateRadioButton extends AppCompatRadioButton
     public boolean isIndeterminate() {
         return mIndeterminate;
     }
+
+    public void setIndeterminate(boolean indeterminate) {
+        setIndeterminateImpl(indeterminate, true);
+    }
+
+    private void setIndeterminateImpl(boolean indeterminate, boolean notify) {
+        if (mIndeterminate != indeterminate) {
+            mIndeterminate = indeterminate;
+            refreshDrawableState();
+            if (notify) {
+                /*notifyViewAccessibilityStateChangedIfNeeded(
+                        AccessibilityEvent.CONTENT_CHANGE_TYPE_UNDEFINED); */
+                notifyStateListener();
+            }
+        }
+    }
+
 
     @ViewDebug.ExportedProperty
     public Boolean getState() {
@@ -161,65 +160,30 @@ public class IndeterminateRadioButton extends AppCompatRadioButton
         return drawableState;
     }
 
-    static class SavedState extends BaseSavedState {
-        Boolean indeterminate;
-
-        /**
-         * Constructor called from {@link IndeterminateRadioButton#onSaveInstanceState()}
-         */
-        SavedState(Parcelable superState) {
-            super(superState);
-        }
-
-        /**
-         * Constructor called from {@link #CREATOR}
-         */
-        private SavedState(Parcel in) {
-            super(in);
-            indeterminate = (Boolean)in.readValue(null);
-        }
-
-        @Override
-        public void writeToParcel(Parcel out, int flags) {
-            super.writeToParcel(out, flags);
-            out.writeValue(indeterminate);
-        }
-
-        @Override
-        public String toString() {
-            return "IndeterminateRadioButton.SavedState{"
-                    + Integer.toHexString(System.identityHashCode(this))
-                    + " indeterminate=" + indeterminate + "}";
-        }
-
-        public static final Creator<SavedState> CREATOR
-                = new Creator<SavedState>() {
-            public SavedState createFromParcel(Parcel in) {
-                return new SavedState(in);
-            }
-
-            public SavedState[] newArray(int size) {
-                return new SavedState[size];
-            }
-        };
-    }
-
     @Override
     public Parcelable onSaveInstanceState() {
         Parcelable superState = super.onSaveInstanceState();
+        IndeterminateSavedState ss = new IndeterminateSavedState(superState);
+        ss.indeterminate = mIndeterminate;
 
-        SavedState ss = new SavedState(superState);
-
-        ss.indeterminate = getState();
         return ss;
     }
 
     @Override
     public void onRestoreInstanceState(Parcelable state) {
-        SavedState ss = (SavedState) state;
+        IndeterminateSavedState ss = (IndeterminateSavedState) state;
 
+        // This temporarily disallows our callback notification, we will call it below if needed
+        mBroadcasting = true;
         super.onRestoreInstanceState(ss.getSuperState());
-        setState(ss.indeterminate);
-        requestLayout();
+        mBroadcasting = false;
+
+        mIndeterminate = ss.indeterminate;
+        // Both "indeterminate" and "checked" state are considered "excited" states. "Excited" state
+        // is state that is different from the default "unchecked". On view restoration CompoundButton
+        // notifies for change if the restored state is non-default. So, we will do the same for our merged state.
+        if (mIndeterminate || isChecked()) {
+            notifyStateListener();
+        }
     }
 }
