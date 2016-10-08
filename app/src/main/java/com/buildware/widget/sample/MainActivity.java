@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.buildware.widget.indeterm.IndeterminateCheckBox;
@@ -22,6 +23,22 @@ public class MainActivity extends AppCompatActivity {
         final AppCompatCheckBox appCompatCheckBox = (AppCompatCheckBox) findViewById(R.id.app_compat_checkbox);
         final IndeterminateCheckBox indetermCheckBox = (IndeterminateCheckBox) findViewById(R.id.indeterm_checkbox);
         final IndeterminateRadioButton radio = (IndeterminateRadioButton) findViewById(R.id.indeterm_radio);
+
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                String stateText = isChecked ? "Checked" : "Unchecked";
+                Toast.makeText(MainActivity.this, "Standard CheckBox: " + stateText, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        appCompatCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                String stateText = isChecked ? "Checked" : "Unchecked";
+                Toast.makeText(MainActivity.this, "AppCompat CheckBox: " + stateText, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         indetermCheckBox.setOnStateChangedListener(new IndeterminateCheckBox.OnStateChangedListener() {
             @Override
