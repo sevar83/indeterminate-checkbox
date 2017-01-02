@@ -62,7 +62,7 @@ IndeterminateCheckBox indetermCheck;
 ...
 indetermCheck.setOnStateChangedListener(new OnStateChangedListener() {
     @Override
-    public void onStateChangedListener(IndeterminateCheckBox check, @Nullable state) {
+    public void onStateChangedListener(IndeterminateCheckBox check, @Nullable Boolean state) {
         if (state == null) {
             // The new state is 'indeterminate'
         } else if (state) {
