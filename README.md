@@ -4,6 +4,8 @@
 
 ![How they look like](https://raw.githubusercontent.com/sevar83/indeterminate-checkbox/master/art/screenshot1.png)
 
+![Tags sample](https://raw.githubusercontent.com/sevar83/indeterminate-checkbox/master/art/3-state%20checkboxes.png)
+
 Android CheckBox and RadioButton with additional 3rd 'indeterminate' state.
 
 ## Requirements
