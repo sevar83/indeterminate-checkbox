@@ -36,4 +36,20 @@
         android:fromId="@+id/checked"
         android:toId="@+id/unchecked"
         android:drawable="@drawable/ic_checkbox_checked_to_unchecked_animation" />
+    <transition
+        android:fromId="@+id/indeterminate"
+        android:toId="@+id/checked"
+        android:drawable="@drawable/ic_checkbox_indeterminate_to_checked_animation" />
+    <transition
+        android:fromId="@+id/checked"
+        android:toId="@+id/indeterminate"
+        android:drawable="@drawable/ic_checkbox_checked_to_indeterminate_animation" />
+    <transition
+        android:fromId="@+id/unchecked"
+        android:toId="@+id/indeterminate"
+        android:drawable="@drawable/ic_checkbox_unchecked_to_indeterminate_animation" />
+    <transition
+        android:fromId="@+id/indeterminate"
+        android:toId="@+id/unchecked"
+        android:drawable="@drawable/ic_checkbox_indeterminate_to_unchecked_animation" />
 </animated-selector>
