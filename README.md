@@ -105,7 +105,6 @@ indetermCheck.getState();
 #### Known Issues 
 - `IndeterminateRadionButton` is not animated. In order to make it animated I had to include about 120 PNG files from the
 Android Lollipop framework. Unlike the `CheckBox` widget the `RadioButton` has no vector animations in Lollipop yet. They still use PNGs. When (and if) Google switches to vectors I'm going to import them here too.
-- No animated transitions from/to 'indeterminate' state. That requires much higher animator skills than mine :)
 - Highlighting on pre-Lollipop seems not working or missing
 
 
