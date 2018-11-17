@@ -9,6 +9,7 @@ import android.support.annotation.AttrRes;
 import android.support.annotation.DrawableRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v7.content.res.AppCompatResources;
 import android.util.StateSet;
 import android.util.TypedValue;
 import android.view.View;
@@ -25,16 +26,13 @@ class Utils {
         if (!(view instanceof IndeterminateCheckable)) {
             throw new IllegalArgumentException("view must implement IndeterminateCheckable");
         }
-
-        final ColorStateList colorStateList = createIndetermColorStateList(view.getContext());
-
+        final ColorStateList colorStateList = createIndeterminateColorStateList(view.getContext());
         final Drawable d = DrawableCompat.wrap(ContextCompat.getDrawable(view.getContext(), drawable));
         DrawableCompat.setTintList(d, colorStateList);
-
         return d;
     }
 
-    private static ColorStateList createIndetermColorStateList(Context context) {
+    private static ColorStateList createIndeterminateColorStateList(Context context) {
 
         final int[][] states = new int[][]{
                 new int[]{-android.R.attr.state_enabled},
@@ -45,10 +43,11 @@ class Utils {
 
         final int normal = resolveColor(context, R.attr.colorControlNormal, Color.DKGRAY);
         final int activated = resolveColor(context, R.attr.colorControlActivated, Color.CYAN);
+        final int intermediate = resolveColor(context, R.attr.colorControlIndeterminate, activated);
         final float disabledAlpha = resolveFloat(context, android.R.attr.disabledAlpha, 0.25f);
         final int[] colors = new int[]{
                 Utils.applyAlpha(normal, disabledAlpha),
-                normal,
+                intermediate,
                 activated,
                 normal
         };
