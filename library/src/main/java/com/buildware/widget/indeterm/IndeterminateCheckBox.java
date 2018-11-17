@@ -1,10 +1,14 @@
 package com.buildware.widget.indeterm;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.util.AttributeSet;
 import android.view.ViewDebug;
@@ -42,23 +46,22 @@ public class IndeterminateCheckBox extends AppCompatCheckBox
     }
 
     public IndeterminateCheckBox(Context context) {
-        this(context, null);
+        super(context);
+        init(context, null);
     }
 
     public IndeterminateCheckBox(Context context, AttributeSet attrs) {
-        this(context, attrs, android.R.attr.checkboxStyle);
+        super(context, attrs);
+        init(context, attrs);
     }
 
     public IndeterminateCheckBox(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init(context, attrs);
+    }
 
-        if (Build.VERSION.SDK_INT >= 23) {
-            setButtonDrawable(R.drawable.btn_checkmark);
-        } else {
-            //setSupportButtonTintList(ContextCompat.getColorStateList(context, R.color.control_checkable_material));
-            setButtonDrawable(Utils.tintDrawable(this, R.drawable.btn_checkmark));
-        }
-
+    private void init(Context context, AttributeSet attrs){
+        setButtonDrawable(Utils.tintDrawable(this, R.drawable.btn_checkmark));
         final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.IndeterminateCheckable);
         try {
             // Read the XML attributes

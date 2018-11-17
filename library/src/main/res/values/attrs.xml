@@ -4,6 +4,9 @@
         <!-- Additional drawable state. It is merged into the parent CompoundButton states -->
         <attr name="state_indeterminate" format="boolean" />
         <!-- Indeterminate state attribute for the view -->
-        <attr name="indeterminate" format="boolean" />
+        <attr name="indeterminate" format="boolean"/>
+        <!--Intermediate color state-->
+        <attr name="colorControlIndeterminate" format="color"/>
+
     </declare-styleable>
 </resources>
