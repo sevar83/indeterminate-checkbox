@@ -18,12 +18,12 @@ allprojects {
 }
 
 ext {
-    compileSdkVersion = 27
+    compileSdkVersion = 29
     targetSdkVersion = 27
     minSdkVersion = 14
-    buildToolsVersion = "27.0.3"
 
-    supportLibVersion = "27.0.2"
+    axAnnotationVersion = "1.1.0"
+    axAppcompatVersion = "1.1.0"
 }
 
 task clean(type: Delete) {

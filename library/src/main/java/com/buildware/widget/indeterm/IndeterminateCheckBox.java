@@ -1,15 +1,10 @@
 package com.buildware.widget.indeterm;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
-import android.support.v7.content.res.AppCompatResources;
-import android.support.v7.widget.AppCompatCheckBox;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatCheckBox;
 import android.util.AttributeSet;
 import android.view.ViewDebug;
 
