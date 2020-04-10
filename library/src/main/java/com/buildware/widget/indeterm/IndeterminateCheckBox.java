@@ -111,12 +111,13 @@ public class IndeterminateCheckBox extends AppCompatCheckBox
     }
 
     @ViewDebug.ExportedProperty
+    @Nullable
     public Boolean getState() {
         return mIndeterminate ? null : isChecked();
     }
 
     @Override
-    public void setState(Boolean state) {
+    public void setState(@Nullable Boolean state) {
         if (state != null) {
             setChecked(state);
         } else {
